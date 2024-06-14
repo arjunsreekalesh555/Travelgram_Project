@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <style>
+
+        .main {
+            min-height: 100vh;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            position: relative;
+            max-width: 300px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            font-size:40px;
+        }
+
+        b {
+            color: green;
+            font-size: 17px;
+
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid green;
+            box-sizing: border-box;
+        }
+
+        .button {
+            background-color: green;
+            color: white;
+            padding: 14px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: darkgreen;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            background-color: lightgrey;
+        }
+
+    </style>
+</head>
+
+<body style="background-image: url('{% static 'booklogin2.jpg' %}'); background-size: cover;">
+
+{% for msg in messages %}
+{{ msg }}
+{% endfor %}
+
+    <div class="main">
+        <h1>REGISTRATION FORM</h1>
+
+        <form method="POST" class="container">
+          {% csrf_token %}
+            <b>Username</b>
+            <input type="text" placeholder="Enter your username..."
+                   id="username" name="username" required>
+
+            <b>Password</b>
+            <input type="password" placeholder="Enter your password..."
+                   id="password" name="password" required>
+
+            <b>Confirm Password</b>
+            <input type="password" placeholder="Enter your password..."
+                   id="password2" name="password2" required>
+
+
+<input type="submit" value="Register" class="button" onclick="registerAlert()">
+            <script src="{% static 'js_file/scripts.js' %}"></script>
+
+        </form>
+    </div>
+
+
+</body>
+</html>

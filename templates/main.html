@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Admin Page</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'create' %}">Create</a>
+        </li>
+                <li class="nav-item">
+          <a class="nav-link" href="{% url 'users' %}">Users</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search" method="post" action="">
+          {% csrf_token %}
+        <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<h3 style="">Available Places</h3>
+{% if data %}
+
+
+<div class="container">
+  <div class="inner_div">
+    <div class="row">
+      {% for d in data %}
+      <div class="col-md-3">
+        <div class="card shadow-sm p-3 mb-5 bg-body rounded animate_animated animate__zoomIn animate__delay-1.7s">
+          <img src="{{ dt.Place_img }}" class="card-img-top" alt="" style="height:200px; object-fit:cover;">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ d.Place_name }}</h5>
+            <p class="card-text">{{ d.Weather }}</p>
+            <p class="card-text">{{ d.Location }}</p>
+            <p class="card-text">{{ d.Map }}</p>
+            <p class="card-text">{{ d.Description }}</p>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <a href="/recipe_fetch/{{ d.id }}/" class="btn btn-success" style="width:100%;">Details</a>
+            </div>
+            <div class="col-md-6">
+              <a href="/update_travel_details/{{ d.id }}/" class="btn btn-success" style="width:100%;">Update</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% else %}
+
+<div class="container">
+  <div class="inner_div">
+    <div class="row">
+      {% for detail in travel_details.object_list %}
+      <div class="col-md-4">
+        <div class="card shadow-sm p-3 mb-5 bg-body rounded animate_animated animate__zoomIn animate__delay-1.7s">
+          <img src="{{ detail.Place_img }}" class="card-img-top" alt="" style="height:200px; object-fit:cover;">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ travel_details.Place_name }}</h5>
+            <p class="card-text">{{ travel_details.Weather }}</p>
+            <p class="card-text">{{ travel_details.Location }}</p>
+            <p class="card-text">{{ travel_details.Map }}</p>
+            <p class="card-text">{{ travel_details.Description }}</p>
+
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <a href="{% url 'fetch-travel-details' detail.id %}" class="btn btn-success" style="width:100%;">Details</a>
+            </div>
+            <div class="col-md-4">
+              <a href="{% url 'update-travel-details' detail.id %}" class="btn btn-success" style="width:100%;">Update</a>
+            </div>
+            <div class="col-md-4">
+              <a href="{% url 'delete-travel-details' detail.id %}" class="btn btn-success" style="width:100%;">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+</body>
+</html>
